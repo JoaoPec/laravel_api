@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 
 Route::get('/', function () {
-    return view('welcome');
+    Log::info('Rota /api/ acessada');
+    return 'Hello world';
 });
