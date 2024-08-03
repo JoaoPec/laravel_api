@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\V1\InvoiceController;
 use Illuminate\Support\Facades\Log;
 
 Route::group(['prefix' => 'v1'], function () {
+    Route::get('customers/hi', [CustomerController::class, 'sayHi']);
     Route::apiResource('customers', CustomerController::class);
     Route::apiResource('invoices', InvoiceController::class);
 });

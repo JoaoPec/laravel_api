@@ -9,15 +9,26 @@ use App\Models\Customer;
 
 use App\Http\Resources\V1\CustomerResource;
 use App\Http\Resources\V1\CustomerCollection;
+use App\Services\V1\CustomerQuery;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return new CustomerCollection(Customer::paginate());
+
+        $filter = new CustomerQuery();
+        $queryItems = $filter->transform($request); // ['Column', 'Operator', 'Value]
+
+        if (count($queryItems) == 0 ){
+            return new CustomerCollection(Customer::paginate());
+        }
+
+        return new CustomerCollection(Customer::where($queryItems)->paginate());
+
     }
 
     /**
@@ -58,6 +69,17 @@ class CustomerController extends Controller
     public function update(UpdateCustomerRequest $request, Customer $customer)
     {
         //
+    }
+    //
+    //    Method to say hi
+    //
+
+    public function sayHi(): \Illuminate\Http\JsonResponse
+    {
+        return response()->json([
+            'message' => 'Hello'
+        ]);
+
     }
 
     /**
