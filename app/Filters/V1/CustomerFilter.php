@@ -1,10 +1,11 @@
 <?php
 
-namespace  App\Services\V1;
+namespace  App\Filters\V1;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
-class CustomerQuery{
+class CustomerFilter{
 
     protected $safeParams = [
         'name' => ['eq'],
@@ -32,9 +33,12 @@ class CustomerQuery{
 
         $eloQuery = [];
 
+
         foreach($this->safeParams as $parm => $operators){
 
             $query = $request->query($parm);
+
+            Log::info($query);
 
             if (!isset($query)){
                 continue;
