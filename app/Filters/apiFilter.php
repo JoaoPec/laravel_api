@@ -23,8 +23,6 @@ class apiFilter{
 
             $query = $request->query($parm);
 
-            Log::info($query);
-
             if (!isset($query)) {
                 continue;
             };

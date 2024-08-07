@@ -2,10 +2,11 @@
 
 namespace  App\Filters\V1;
 
+use App\Filters\apiFilter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
-class CustomerFilter{
+class CustomerFilter extends apiFilter {
 
     protected $safeParams = [
         'name' => ['eq'],
@@ -29,33 +30,5 @@ class CustomerFilter{
         'gte' => '>='
     ];
 
-    public function transform(Request $request){
-
-        $eloQuery = [];
-
-
-        foreach($this->safeParams as $parm => $operators){
-
-            $query = $request->query($parm);
-
-            Log::info($query);
-
-            if (!isset($query)){
-                continue;
-            };
-
-            $column = $this->columnMap[$parm] ?? $parm;
-
-            foreach ($operators as $operator){
-                if (isset($query[$operator])){
-                    $eloQuery[] = [$column, $this->operatorMap[$operator], $query[$operator]];
-                }
-            }
-
-        }
-
-        return $eloQuery;
-
-    }
 
 }
